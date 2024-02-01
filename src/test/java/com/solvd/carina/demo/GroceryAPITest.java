@@ -3,7 +3,6 @@ package com.solvd.carina.demo;
 import com.solvd.carina.demo.api.GetAllProductsMethod;
 import com.solvd.carina.demo.api.GetStatusMethod;
 import com.solvd.carina.demo.api.PostCreateACartMethod;
-import com.solvd.carina.demo.api.PostUserMethod;
 import com.zebrunner.carina.core.IAbstractTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,5 +34,6 @@ public class GroceryAPITest implements IAbstractTest {
         PostCreateACartMethod cart=new PostCreateACartMethod();
         cart.createANewCart();
         cart.callAPI();
+        cart.validateResponseAgainstSchema("api/users/_post/rs_createCart.schema");
     }
 }
