@@ -1,0 +1,22 @@
+{
+	"definitions": {},
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$id": "https://example.com/object1706810866.json",
+	"title": "Root",
+	"type": "object",
+	"required": [
+		"status"
+	],
+	"properties": {
+		"status": {
+			"$id": "#root/status",
+			"title": "Status",
+			"type": "string",
+			"default": "",
+			"examples": [
+				"UP"
+			],
+			"pattern": "^.*$"
+		}
+	}
+}
