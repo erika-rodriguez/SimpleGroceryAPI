@@ -68,10 +68,78 @@ The project focuses on testing the Simple Grocery API, using core testing tools 
 ### Study case: LOGGER implementation
 - Logging is a powerful aid for understanding and debugging a program’s run-time behavior. Logs capture and persist the important data and make it available for analysis at any point in time.
 ```
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public static final Logger LOGGER= Logger.getLogger(String.valueOf(HomePage.class));
+private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 ```
+### Study case: REST service call domain object (Declarative approach)
+- Approach based on implicit instantiation of the AbstractApiMethod. 
+- It allows to: more convenient and efficiently organize description of endpoints;- have all carina api methods for the same URL pattern be defined within single class; - reduce time for the implementation of the desired AbstractApiMethod; - flexibly configure all api methods with Java annotations.
+- In this approach it is possible to use these annotations not only on the class but also on the method level.
+1. Create an **Interface** to use it as a template. 
+   - Use the @EndpointTemplate annotation to set the basic endpoint shared with various methods.
+   - Use the @EndpointTemplateMethod to set the specific url and method type.
+   - Add @SuccessfulHttpStatus to define a status code for a PASSED condition. This will allow to use the callAPIExpectSuccess() in Test Class.
+   - If required, it is possible to add Path Variables using (@PathParam(key = "requiredKey") int key) as a method parameter.
+```
+import com.zebrunner.carina.api.AbstractApiMethodV2;
+import com.zebrunner.carina.api.annotation.EndpointTemplate;
+import com.zebrunner.carina.api.annotation.EndpointTemplateMethod;
+import com.zebrunner.carina.api.annotation.PathParam;
+import com.zebrunner.carina.api.annotation.SuccessfulHttpStatus;
+import com.zebrunner.carina.api.http.HttpMethodType;
+import com.zebrunner.carina.api.http.HttpResponseStatusType;
+
+@EndpointTemplate(url = "${config.env.api_url}/products")
+public interface IProduct {
+    @EndpointTemplateMethod(url = "/${productId}", methodType = HttpMethodType.GET)
+    @SuccessfulHttpStatus(status = HttpResponseStatusType.OK_200)
+    AbstractApiMethodV2 getAProduct(@PathParam(key = "productId") int productId);
+}
+```
+2. Create a class that implements the interface
+   - For more customization on api method definition level you can implement the interface and use the proxy class inside.
+   - Now you can invoke a prepareTemplate method from TemplateFactory to use proxy implementation in the test.
+```
+import com.solvd.carina.demo.api.common.IProduct;
+import com.zebrunner.carina.api.AbstractApiMethodV2;
+import com.zebrunner.carina.api.binding.TemplateFactory;
+
+public class ProductAPI implements IProduct {
+    private final IProduct productTemplate;
+
+    public ProductAPI(IProduct productTemplate) {
+        this.productTemplate = TemplateFactory.prepareTemplate(IProduct.class);
+    }
+    
+    @Override
+    public AbstractApiMethodV2 getAProduct(int productId) {
+        AbstractApiMethodV2 apiMethod=productTemplate.getAProduct(productId);
+        return apiMethod;
+    }
+}
+```
+3. Create a Test Class that implements IAbstractTest
+   - Invoke a prepareTemplate method from TemplateFactory to use proxy implementation in the test.
+   - The parameters can be found in **api.properties**.
+   - Specify the expected HTTP status.
+   - Call the API.
+   - Validate the response by a template or parse some data by JSON path.
+   - Make further calls using the data from the previous call if needed.
+```
+public class GroceryAPITest implements IAbstractTest {
+   @Test
+   public void testGetAProduct(){
+   IProduct template= TemplateFactory.prepareTemplate(IProduct.class);
+   AbstractApiMethodV2 api=template.getAProduct(Integer.parseInt(R.API.get("productId")));
+   api.callAPIExpectSuccess();
+   api.validateResponseAgainstSchema("api/grocery/_get/rs_getAProduct.schema");
+   }
+}
+```
+
+
 <!-- WORKFLOW -->
 ## Workflow
 
@@ -85,7 +153,8 @@ public static final Logger LOGGER= Logger.getLogger(String.valueOf(HomePage.clas
 <!-- USEFUL DOCUMENTATION -->
 ## Useful Documentation
 
-* [Selenium Github Example](https://github.com/SeleniumHQ/seleniumhq.github.io/tree/trunk/examples)
+* [RestAssured](https://rest-assured.io/)
 * [TestRail](https://support.gurock.com/hc/en-us)
 * [SimpleGroceryAPI Documentation](https://github.com/vdespa/Postman-Complete-Guide-API-Testing/blob/main/simple-grocery-store-api.md)
 * [TestNG](https://testng.org/doc/documentation-main.html)
+* [JsonSchema Generator](https://www.liquid-technologies.com/online-json-to-schema-converter)
