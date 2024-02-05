@@ -65,7 +65,7 @@ The project focuses on testing the Simple Grocery API, using core testing tools 
 
 ## Implementation details
 
-### Study case: LOGGER implementation
+### LOGGER implementation
 - Logging is a powerful aid for understanding and debugging a program’s run-time behavior. Logs capture and persist the important data and make it available for analysis at any point in time.
 ```
 import org.slf4j.Logger;
@@ -73,7 +73,7 @@ import org.slf4j.LoggerFactory;
 
 private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 ```
-### Study case: REST service call domain object (Declarative approach)
+### REST service call domain object (Declarative approach)
 - Approach based on implicit instantiation of the AbstractApiMethod. 
 - It allows to: more convenient and efficiently organize description of endpoints;- have all carina api methods for the same URL pattern be defined within single class; - reduce time for the implementation of the desired AbstractApiMethod; - flexibly configure all api methods with Java annotations.
 - In this approach it is possible to use these annotations not only on the class but also on the method level.
@@ -138,7 +138,11 @@ public class GroceryAPITest implements IAbstractTest {
    }
 }
 ```
-
+### JsonSchema Validation
+- When you need to validate response structure regardless of the actual values, you may use validation by JSON schema.
+1. In this case, you need an actual response from the service.
+2. Now we need to generate a schema, you can use an <a href="https://www.liquid-technologies.com/online-json-to-schema-converter">online JSON schema Generator</a>. You need to provide the original JSON from the response, then choose some schema options (allow the additional properties in objects, mark the current object properties as required, hard-code some expected values, etc.) and then generate the schema. 
+3. Copy-paste the generated schema into test resources as a .schema file, and you're ready to use it in the test providing the file path.
 
 <!-- WORKFLOW -->
 ## Workflow
