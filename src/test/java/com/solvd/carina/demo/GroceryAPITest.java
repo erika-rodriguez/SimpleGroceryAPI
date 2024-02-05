@@ -1,6 +1,7 @@
 package com.solvd.carina.demo;
 
 import com.solvd.carina.demo.api.*;
+import com.solvd.carina.demo.api.common.ICart;
 import com.solvd.carina.demo.api.common.IProduct;
 import com.zebrunner.carina.api.AbstractApiMethodV2;
 import com.zebrunner.carina.api.binding.TemplateFactory;
@@ -25,22 +26,6 @@ public class GroceryAPITest implements IAbstractTest {
     }
 
     @Test
-    public void testCreateNewCart(){
-        PostCreateACartMethod cart=new PostCreateACartMethod();
-        cart.createANewCart();
-        cart.callAPI();
-        cart.validateResponseAgainstSchema("api/grocery/_post/rs_createCart.schema");
-    }
-
-    @Test
-    public void testGetACart(){
-        GetACartMethod api=new GetACartMethod();
-        api.addUrlParameter("cartId",R.API.get("cartId"));
-        api.callAPI();
-
-    }
-
-    @Test
     public void testGetAProduct(){
         IProduct template= TemplateFactory.prepareTemplate(IProduct.class);
         AbstractApiMethodV2 api=template.getAProduct(Integer.parseInt(R.API.get("productId")));
@@ -56,5 +41,21 @@ public class GroceryAPITest implements IAbstractTest {
         api.expectResponseStatus(HttpResponseStatusType.OK_200);
         api.callAPI();
         api.validateResponseAgainstSchema("api/grocery/_get/rs_getAllProducts.schema");
+    }
+
+    @Test
+    public void testCreateNewCart(){
+        ICart template=TemplateFactory.prepareTemplate(ICart.class);
+        AbstractApiMethodV2 api= template.createNewCart();
+        api.expectResponseStatus(HttpResponseStatusType.CREATED_201);
+        api.callAPI();
+    }
+
+    @Test
+    public void testGetACart(){
+        GetACartMethod api=new GetACartMethod();
+        api.addUrlParameter("cartId",R.API.get("cartId"));
+        api.callAPI();
+
     }
 }
