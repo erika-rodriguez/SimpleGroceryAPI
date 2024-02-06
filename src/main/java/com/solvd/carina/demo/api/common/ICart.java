@@ -12,8 +12,12 @@ public interface ICart {
     @EndpointTemplateMethod(url = "/${cartId}", methodType = HttpMethodType.GET)
     AbstractApiMethodV2 getACart(@PathParam(key = "cartId") String cartId);
     @EndpointTemplateMethod(url = "/${cartId}/items", methodType = HttpMethodType.POST)
-    @RequestTemplatePath(path = "api/grocery/_get/rq_addItemToCart.json")
+    @RequestTemplatePath(path = "api/grocery/_post/rq_postAddItemToCart.json")
     AbstractApiMethodV2 addItemToCart(@PathParam(key = "cartId") String cartId);
+    @EndpointTemplateMethod(url = "/${cartId}/items", methodType = HttpMethodType.GET)
+    AbstractApiMethodV2 getCartsItems(@PathParam(key = "cartId") String cartId);
+
+
 
 
 }

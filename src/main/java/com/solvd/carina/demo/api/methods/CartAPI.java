@@ -27,4 +27,10 @@ public class CartAPI implements ICart {
         AbstractApiMethodV2 apiMethod=cartTemplate.addItemToCart(cartId);
         return apiMethod;
     }
+
+    @Override
+    public AbstractApiMethodV2 getCartsItems(String cartId) {
+        AbstractApiMethodV2 apiMethod=cartTemplate.getCartsItems(cartId);
+        return apiMethod;
+    }
 }
