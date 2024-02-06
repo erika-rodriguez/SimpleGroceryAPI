@@ -2,6 +2,7 @@ package com.solvd.carina.demo;
 
 import com.solvd.carina.demo.api.*;
 import com.solvd.carina.demo.api.common.ICart;
+import com.solvd.carina.demo.api.common.IOrder;
 import com.solvd.carina.demo.api.common.IProduct;
 import com.zebrunner.carina.api.AbstractApiMethodV2;
 import com.zebrunner.carina.api.binding.TemplateFactory;
@@ -91,6 +92,15 @@ public class GroceryAPITest implements IAbstractTest {
         AbstractApiMethodV2 api= template.deleteItemInCart(R.API.get("cartId"), R.API.get("itemId"));
         api.expectResponseStatus(HttpResponseStatusType.NO_CONTENT_204);
         api.callAPI();
+    }
+
+    @Test
+    public void testCreateANewOrder(){
+        IOrder template=TemplateFactory.prepareTemplate(IOrder.class);
+        AbstractApiMethodV2 api= template.createNewOrder();
+        api.expectResponseStatus(HttpResponseStatusType.CREATED_201);
+        api.callAPI();
+        api.validateResponseAgainstSchema("api/grocery/_post/rs_postCreateNewOrder.schema");
     }
 
 
