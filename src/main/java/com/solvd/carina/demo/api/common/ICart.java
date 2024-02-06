@@ -16,6 +16,9 @@ public interface ICart {
     AbstractApiMethodV2 addItemToCart(@PathParam(key = "cartId") String cartId);
     @EndpointTemplateMethod(url = "/${cartId}/items", methodType = HttpMethodType.GET)
     AbstractApiMethodV2 getCartsItems(@PathParam(key = "cartId") String cartId);
+    @EndpointTemplateMethod(url = "/${cartId}/items/${itemId}", methodType = HttpMethodType.PATCH)
+    @RequestTemplatePath(path = "api/grocery/_post/rq_patchModifyItem.json")
+    AbstractApiMethodV2 modifyItemInCart(@PathParam(key = "cartId") String cartId, @PathParam(key = "itemId") String itemId);
 
 
 

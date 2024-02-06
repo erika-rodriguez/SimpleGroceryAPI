@@ -76,4 +76,14 @@ public class GroceryAPITest implements IAbstractTest {
         api.callAPI();
         api.validateResponseAgainstSchema("api/grocery/_get/rs_getCartsItems.schema");
     }
+
+    @Test
+    public void testModifyItemInCart(){
+        ICart template=TemplateFactory.prepareTemplate(ICart.class);
+        AbstractApiMethodV2 api= template.modifyItemInCart(R.API.get("cartId"), R.API.get("itemId"));
+        api.expectResponseStatus(HttpResponseStatusType.NO_CONTENT_204);
+        api.callAPI();
+    }
+
+
 }
