@@ -85,5 +85,13 @@ public class GroceryAPITest implements IAbstractTest {
         api.callAPI();
     }
 
+    @Test
+    public void testDeleteItemInCart(){
+        ICart template=TemplateFactory.prepareTemplate(ICart.class);
+        AbstractApiMethodV2 api= template.deleteItemInCart(R.API.get("cartId"), R.API.get("itemId"));
+        api.expectResponseStatus(HttpResponseStatusType.NO_CONTENT_204);
+        api.callAPI();
+    }
+
 
 }

@@ -39,4 +39,10 @@ public class CartAPI implements ICart {
         AbstractApiMethodV2 apiMethod=cartTemplate.modifyItemInCart(cartId,itemId);
         return apiMethod;
     }
+
+    @Override
+    public AbstractApiMethodV2 deleteItemInCart(String cartId, String itemId) {
+        AbstractApiMethodV2 apiMethod=cartTemplate.modifyItemInCart(cartId,itemId);
+        return apiMethod;
+    }
 }
