@@ -103,5 +103,30 @@ public class GroceryAPITest implements IAbstractTest {
         api.validateResponseAgainstSchema("api/grocery/_post/rs_postCreateNewOrder.schema");
     }
 
+    @Test
+    public void testUpdateAnOrder(){
+        IOrder template=TemplateFactory.prepareTemplate(IOrder.class);
+        AbstractApiMethodV2 api= template.updateAnOrder(R.API.get("orderId"));
+        api.expectResponseStatus(HttpResponseStatusType.NO_CONTENT_204);
+        api.callAPI();
+    }
+
+    @Test
+    public void testGetAnOrder(){
+        IOrder template=TemplateFactory.prepareTemplate(IOrder.class);
+        AbstractApiMethodV2 api= template.getAnOrder(R.API.get("orderId"));
+        api.expectResponseStatus(HttpResponseStatusType.OK_200);
+        api.callAPI();
+    }
+
+    @Test
+    public void testAllOrders(){
+        IOrder template=TemplateFactory.prepareTemplate(IOrder.class);
+        AbstractApiMethodV2 api= template.getAllOrders();
+        api.expectResponseStatus(HttpResponseStatusType.OK_200);
+        api.callAPI();
+        api.validateResponseAgainstSchema("api/grocery/_get/rs_getAllOrders.schema");
+    }
+
 
 }

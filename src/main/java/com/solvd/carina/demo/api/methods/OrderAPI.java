@@ -8,4 +8,19 @@ public class OrderAPI implements IOrder {
     public AbstractApiMethodV2 createNewOrder() {
         return null;
     }
+
+    @Override
+    public AbstractApiMethodV2 updateAnOrder(String orderId) {
+        return null;
+    }
+
+    @Override
+    public AbstractApiMethodV2 getAnOrder(String orderId) {
+        return null;
+    }
+
+    @Override
+    public AbstractApiMethodV2 getAllOrders() {
+        return null;
+    }
 }
