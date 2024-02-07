@@ -3,7 +3,6 @@ package com.solvd.carina.demo.api.common;
 import com.zebrunner.carina.api.AbstractApiMethodV2;
 import com.zebrunner.carina.api.annotation.*;
 import com.zebrunner.carina.api.http.HttpMethodType;
-import com.zebrunner.carina.utils.R;
 
 @EndpointTemplate(url="${config.env.api_url}/orders")
 public interface IOrder {
