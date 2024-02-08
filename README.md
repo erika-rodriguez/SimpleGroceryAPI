@@ -29,7 +29,7 @@
 ## About The Project
 
 The project focuses on testing the Simple Grocery API, using core testing tools such as Java, and Rest-assured. The testing process is integrated with Jenkins and using TestRail to provide a comprehensive testing experience. The goal of the project is to improve testing skills and gain experience in web testing.
-![Alt text](img.png)
+
 ### Built With
 
 * Programming Language: Java
@@ -144,6 +144,12 @@ public class GroceryAPITest implements IAbstractTest {
 2. Now we need to generate a schema, you can use an <a href="https://www.liquid-technologies.com/online-json-to-schema-converter">online JSON schema Generator</a>. You need to provide the original JSON from the response, then choose some schema options (allow the additional properties in objects, mark the current object properties as required, hard-code some expected values, etc.) and then generate the schema. 
 3. Copy-paste the generated schema into test resources as a .schema file, and you're ready to use it in the test providing the file path.
 
+### Authorization
+- Some endpoints may require authentication. To submit or view an order, you need to register your API client and obtain an access token. The endpoints that require authentication expect a bearer token sent in the Authorization header.
+- Once you get your Bearer Token, you can send it in Header Request.
+```
+@Header(key = "Authorization", value = token)
+```
 <!-- WORKFLOW -->
 ## Workflow
 

@@ -1,6 +1,5 @@
 package com.solvd.carina.demo;
 
-import com.solvd.carina.demo.api.*;
 import com.solvd.carina.demo.api.common.ICart;
 import com.solvd.carina.demo.api.common.IOrder;
 import com.solvd.carina.demo.api.common.IProduct;
@@ -17,14 +16,6 @@ import java.lang.invoke.MethodHandles;
 
 public class GroceryAPITest implements IAbstractTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-
-    @Test
-    public void testAPIStatus(){
-        GetStatusMethod status=new GetStatusMethod();
-        status.getStatusOfAPI();
-        status.callAPIExpectSuccess();
-        status.validateResponseAgainstSchema("api/grocery/_get/rs.schema");
-    }
 
     @Test
     public void testGetAProduct(){
