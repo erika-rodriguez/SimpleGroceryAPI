@@ -6,11 +6,11 @@ import com.zebrunner.carina.api.http.HttpMethodType;
 
 @EndpointTemplate(url="${config.env.api_url}/orders")
 public interface IOrder {
-    public static final String token="Bearer fab020....";
+    public static final String token="Bearer fab020ceefa61d6b5dc276df571d06c43e07533f21ac8269c4c88271dc54cf32";
 
     @EndpointTemplateMethod(url = "", methodType = HttpMethodType.POST)
     @HideRequestHeadersInLogs(headers = "Authorization")
-        @Header(key = "Authorization", value = token)
+    @Header(key = "Authorization", value = token)
     @RequestTemplatePath(path = "api/grocery/_post/rq_postCreateNewOrder.json")
     AbstractApiMethodV2 createNewOrder();
 
