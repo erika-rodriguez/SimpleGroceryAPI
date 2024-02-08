@@ -23,7 +23,6 @@ public class GroceryAPITest implements IAbstractTest {
         AbstractApiMethodV2 api=template.getAProduct(Integer.parseInt(R.API.get("productId")));
         api.callAPIExpectSuccess();
         api.validateResponseAgainstSchema("api/grocery/_get/rs_getAProduct.schema");
-
     }
 
     @Test
@@ -111,13 +110,11 @@ public class GroceryAPITest implements IAbstractTest {
     }
 
     @Test
-    public void testAllOrders(){
+    public void testGetAllOrders(){
         IOrder template=TemplateFactory.prepareTemplate(IOrder.class);
         AbstractApiMethodV2 api= template.getAllOrders();
         api.expectResponseStatus(HttpResponseStatusType.OK_200);
         api.callAPI();
         api.validateResponseAgainstSchema("api/grocery/_get/rs_getAllOrders.schema");
     }
-
-
 }
