@@ -6,7 +6,7 @@ import com.zebrunner.carina.api.http.HttpMethodType;
 
 @EndpointTemplate(url="${config.env.api_url}/orders")
 public interface IOrder {
-    public static final String token="Bearer fab020ce...";
+    public static final String token="Bearer fab020";
 
     @EndpointTemplateMethod(url = "", methodType = HttpMethodType.POST)
     @HideRequestHeadersInLogs(headers = "Authorization")
